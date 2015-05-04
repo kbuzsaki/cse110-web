@@ -18,6 +18,10 @@ module.exports = {
       via: 'groups',
       dominant: true
     },
+    polls: {
+      collection: 'Poll',
+      via: 'group',
+    },
 
     toJSON: function(){
     	var json = {
@@ -25,6 +29,9 @@ module.exports = {
     		name: this.name,
     		members: this.members.map(function(member) {
     			return member.id;
+    		}),
+    		polls: this.polls.map(function(poll) {
+    			return poll.id;
     		})
     	};
   		return json;
