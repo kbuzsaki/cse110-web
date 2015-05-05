@@ -36,6 +36,7 @@ module.exports = {
           return group.id;
         })
       };
+      console.log(this.groups);
       return json;
     }
   }

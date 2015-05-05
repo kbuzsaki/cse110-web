@@ -24,7 +24,7 @@ module.exports = {
     content: {
       type: 'integer',
       required: true
-    },
+    }/*,
     toJSON: function(){
       var json = {
         id: this.id,
@@ -38,10 +38,10 @@ module.exports = {
         json.content = ChoiceContent.findOne(this.content, function(err, content) {
           json.content = content;
         });
-      }*/
+      }
 
       return json;
-    }
+    }  */
   }
 };
 
