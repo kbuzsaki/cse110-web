@@ -21,6 +21,10 @@ module.exports = {
       type: 'string',
       required: true
     },
+    hash: {
+      type: 'string',
+      required: true
+    },
     questions: {
       collection: 'question',
       via: 'poll'

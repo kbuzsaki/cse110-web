@@ -24,24 +24,7 @@ module.exports = {
     content: {
       type: 'integer',
       required: true
-    }/*,
-    toJSON: function(){
-      var json = {
-        id: this.id,
-        poll: this.poll.id,
-        type: this.type,
-        title: this.title,
-        content: this.content
-      };
-
-      /*if (this.type == "choice") {
-        json.content = ChoiceContent.findOne(this.content, function(err, content) {
-          json.content = content;
-        });
-      }
-
-      return json;
-    }  */
+    }
   }
 };
 

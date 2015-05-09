@@ -7,11 +7,6 @@
 
 module.exports = {
 
-  //Finds all questions
-  find: function(req, res){
-    res.send('nope');
-  }, /* end find */
-
   //Find and return a single question & its content
   findOne: function(req, res){
     //Get the id from the request (the url)

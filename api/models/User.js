@@ -24,20 +24,6 @@ module.exports = {
     groups: {
       collection: 'Group',
       via:'members'
-    },
-
-    toJSON: function(){
-      var json = {
-        id: this.id,
-        name: this.name,
-        hash: this.hash,
-        avatar: this.avatar,
-        groups: this.groups.map(function(group) {
-          return group.id;
-        })
-      };
-      console.log(this.groups);
-      return json;
     }
   }
 };
