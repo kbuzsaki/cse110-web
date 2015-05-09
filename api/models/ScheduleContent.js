@@ -6,8 +6,7 @@
 */
 
 module.exports = {
-attributes: {
-  	schema: true,
+  schema: true,
   attributes: {
     available_blocks: {[			//An array of available blocks
     	start_date: {
@@ -21,6 +20,9 @@ attributes: {
     		}
     	}
     ]},
+    question: {
+      model: 'question'
+    },
     block_size: {
       type: 'integer'			//An integer value of the minimum number of minutes for a meeting time
     }
@@ -28,6 +30,6 @@ attributes: {
       collection: 'ScheduleResponse',
       via: 'question'
     }*/
- }
+	}
 };
 
