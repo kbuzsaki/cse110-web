@@ -24,11 +24,12 @@ module.exports = {
     hash: {
       type: 'string',
       required: true
+      //TODO UNIQUE
     },
     questions: {
       collection: 'question',
       via: 'poll'
-    },
+    }/*,
     toJSON: function(){
       var json = {
         id: this.id,
@@ -40,7 +41,7 @@ module.exports = {
         })
       };
       return json;
-    }
+    }*/
   }
 };
 

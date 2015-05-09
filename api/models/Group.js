@@ -21,7 +21,7 @@ module.exports = {
     polls: {
       collection: 'Poll',
       via: 'group',
-    },
+    }/*,
 
     toJSON: function(){
     	var json = {
@@ -35,7 +35,7 @@ module.exports = {
     		})
     	};
   		return json;
-  	}
+  	}*/
   }
 
 
