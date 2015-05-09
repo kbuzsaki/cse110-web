@@ -1,0 +1,11 @@
+/**
+ * ChoiceResponseController
+ *
+ * @description :: Server-side logic for managing Choiceresponses
+ * @help        :: See http://links.sailsjs.org/docs/controllers
+ */
+
+module.exports = {
+	
+};
+
