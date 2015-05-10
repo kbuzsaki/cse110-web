@@ -24,6 +24,12 @@ module.exports = {
     groups: {
       collection: 'Group',
       via:'members'
+    },
+    toJSON: function(){
+      this.groups = this.groups.map(function(group) {
+          return group.id;
+      })
+      return this;
     }
   }
 };

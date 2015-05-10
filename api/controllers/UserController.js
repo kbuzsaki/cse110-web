@@ -22,12 +22,32 @@ module.exports = {
   findOne: function(req, res) {
     var id = req.param('id');
     //Generate the query based on the ID
-    var query = User.findOne(id);
-    query.exec(function (err, user) {
-      if (err) return res.serverError(err);
-      if(!user) return res.notFound('User with `id` not found.');
+    var user = {};
+    var getUser = function(done) {
+      var query = User.findOne(id).populate('groups');
+      query.exec(function (err, u) {
+        if (err) {
+          done(true);
+          return res.serverError(err);
+        }
+        if(!u){
+          done(true);
+          return res.notFound('User with `id` not found.');
+        }
+        user = u;
+        done();
+      });
+    };
+
+    var respond = function(done) {
       res.ok(user);
-    });
+      done();
+    }
+
+    async.series([
+        getUser,
+        respond
+    ]);
   }
 };
 

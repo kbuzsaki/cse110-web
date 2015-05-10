@@ -8,7 +8,7 @@
 module.exports = {
   schema: true,
   attributes: {
-    available_blocks: {[			//An array of available blocks
+    /*available_blocks: {[			//An array of available blocks
     	start_date: {
     		time: {
     			type: 'date'
@@ -19,7 +19,7 @@ module.exports = {
     			type: 'date'
     		}
     	}
-    ]},
+    ]},*/
     question: {
       model: 'question'
     },

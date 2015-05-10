@@ -16,9 +16,9 @@ module.exports = {
     rankContent: {
       model:'RankContent'
     },
-    choices: {[
+    choices: {
       type: 'string'
-    ]}
+    }
   }
 };
 

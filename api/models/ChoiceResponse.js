@@ -14,8 +14,8 @@ module.exports = {
     choiceContent: {
       model:'ChoiceContent'
     },
-    choices: {[
+    choices: {
       type: 'string'
-    ]}
+    }
   }
 };

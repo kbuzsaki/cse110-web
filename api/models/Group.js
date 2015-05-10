@@ -21,21 +21,17 @@ module.exports = {
     polls: {
       collection: 'Poll',
       via: 'group',
-    }/*,
+    },
 
     toJSON: function(){
-    	var json = {
-    		id: this.id,
-    		name: this.name,
-    		members: this.members.map(function(member) {
-    			return member.id;
-    		}),
-    		polls: this.polls.map(function(poll) {
-    			return poll.id;
-    		})
-    	};
-  		return json;
-  	}*/
+    this.members = this.members.map(function(member) {
+        return member.id;
+      })
+      this.polls = this.polls.map(function(poll) {
+        return poll.id;
+      })
+  		return this;
+  	}
   }
 
 

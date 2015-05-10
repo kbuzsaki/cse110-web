@@ -29,19 +29,13 @@ module.exports = {
     questions: {
       collection: 'question',
       via: 'poll'
-    }/*,
+    },
     toJSON: function(){
-      var json = {
-        id: this.id,
-        group: this.group.id,
-        creator: this.creator.id,
-        name: this.name,
-        questions: this.questions.map(function(question) {
-          return question.id;
-        })
-      };
-      return json;
-    }*/
+      this.questions = this.questions.map(function(question) {
+        return question.id;
+      })
+      return this;
+    }
   }
 };
 

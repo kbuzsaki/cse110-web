@@ -9,13 +9,13 @@
 module.exports = {
 	schema: true,
   attributes: {
-  	user_id{
+    user: {
   		model: 'user'
   	},
   	scheduleContent: {
   		model: 'scheduleContent'
   	},
-  	available_blocks: {[
+  	/*available_blocks: {[
   		start_time: {
   			type: 'date'
   		},
@@ -23,8 +23,7 @@ module.exports = {
   			type: 'date'
   		}
 
-  	]}
-
+  	]}*/
   }
 };
 
