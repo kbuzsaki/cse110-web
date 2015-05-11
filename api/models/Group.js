@@ -24,15 +24,33 @@ module.exports = {
     },
 
     toJSON: function(){
-    this.members = this.members.map(function(member) {
+/*    this.members = this.members.map(function(member) {
         return member.id;
       })
       this.polls = this.polls.map(function(poll) {
         return poll.id;
       })
-  		return this;
+  		return this;*/
+      return flatten(this);
   	}
   }
 
-
 };
+
+function flatten (object) {
+    var flat = {
+      //arr : []
+    };
+    for (var property in object) {
+       if (object.hasOwnProperty(property) && property.constructor == Array) {  // Map the collection to its id
+        object.property = property.map(function(items){
+           return items.id;
+        })
+        //flat.arr = flat.arr.concat(object.property); // Concate the properties
+        //flat[property] = object[property];
+      }
+      flat[property] = object[property];
+        //console.log("flat.property: " + property);
+    }
+  return flat;
+}
