@@ -39,7 +39,7 @@ function flatten (object) {
       //arr : []
     };
     for (var property in object) {
-       if (object.hasOwnProperty(property) && property.constructor == Array) {  // Map the collection to its id
+       if (object.hasOwnProperty(property) && property.constructor == Array) {  // Map the collection to its id                                                                                             
         object.property = property.map(function(items){
            return items.id;
         })
