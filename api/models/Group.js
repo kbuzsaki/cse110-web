@@ -34,5 +34,17 @@ module.exports = {
   	}
   }
 
-
 };
+
+function flatten (object) {
+    var flat = {};
+    for (var property in object) {
+       if (object.hasOwnProperty(property) && property.constructor == Array) {
+        object.property = property.map(function(items){ // Map the collection to its id
+           return items.id;
+        })
+      }
+      flat[property] = object[property];
+    }
+  return flat;
+}

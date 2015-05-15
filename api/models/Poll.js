@@ -34,8 +34,6 @@ module.exports = {
       this.questions = this.questions.map(function(question) {
         return question.id;
       })
-      return this;
     }
   }
 };
-
