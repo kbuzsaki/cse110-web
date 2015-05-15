@@ -1,0 +1,26 @@
+<h1>Test</h1>
+<p>ID: <%= user.id %> Name: <%= user.name %></p>
+<table id="polls">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+  <% polls.forEach(function(poll)  { %>
+    <tr>
+      <td><%= poll.id %></td>
+      <td><a href='/api/poll/<%= poll.id %>'><%= poll.name %></a></td>
+    </tr>
+  <% }); %>
+</table>
+<table id="groups">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+  <% user.groups.forEach(function(group)  { %>
+    <tr>
+      <td><%= group.id %></td>
+      <td><a href='/api/group/<%= group.id %>'><%= group.name %></a></td>
+    </tr>
+  <% }); %>
+</table>

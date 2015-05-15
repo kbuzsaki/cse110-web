@@ -34,7 +34,7 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
-  }
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -45,5 +45,13 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
+  'GET /simple/:id' : {
+    controller: "Simple",
+    action: "index"
+  },
+  'GET /simple/poll/:id' : {
+    controller: "Simple",
+    action: "poll"
+  }
 
 };

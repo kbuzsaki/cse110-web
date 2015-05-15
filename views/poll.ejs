@@ -1,0 +1,14 @@
+<h1>Poll</h1>
+<p>ID: <%= poll.id %> Name: <%= poll.name %></p>
+<table id="questions">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+  <% poll.questions.forEach(function(question)  { %>
+    <tr>
+      <td><%= question.id %></td>
+      <td><a href='/api/question/<%= question.id %>'><%= question.title %></a></td>
+    </tr>
+  <% }); %>
+</table>

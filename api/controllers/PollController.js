@@ -12,12 +12,11 @@ module.exports = {
     var userID = data.creator;
     var crypto = require('crypto');
 
-    console.log(req.body);
     var validateGroup = function(done){
       if (!data.group){
         Group.create({name:"Group for: "+data.name}, function(err, group){
           if (err) return res.negotiate(err);
-          console.log("Group not specified, new group: " + group.id);
+          console.log("Group not specified, new group: " + group.id + " Adding: " + data.creator);
           group.members.add(userID);
           group.save(function(err, group) {
             if(err){
@@ -35,24 +34,32 @@ module.exports = {
       }
     };
 
+    var poll = {};
     var createPoll = function(done){
       data.hash = crypto.randomBytes(20).toString('hex');
-      data.questions.forEach( function(question){
-        question.content = 2222222222;
-      });
-      Poll.create(data, function created (err, poll) {
+      Poll.create(data, function created (err, p) {
         if (err) return res.negotiate(err);
         console.log("Poll created: " + data.hash);
-        console.log(poll);
+        console.log(p);
+        poll = p;
+        done();
+      });
+    };
+
+    var respond = function(done){
+      var query = Poll.findOne(poll.id).populate('questions');
+      query.exec(function(err, poll){
+        //console.log(poll);
         res.status(201);
         res.json(poll);
+        done();
       });
-      done();
     };
 
     async.series([
         validateGroup,
-        createPoll
+        createPoll,
+        respond
     ]);
   },/* end create */
 

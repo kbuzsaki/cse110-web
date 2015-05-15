@@ -27,7 +27,7 @@ module.exports = {
       //Get the model class needed to query the content using the question type
       var ContentModel = req._sails.models[question.type + "content"];
       //Generate and execute the query to get the content
-      var contentQuery = ContentModel.findOne(question.content);
+      var contentQuery = ContentModel.findOne().where({question: id});
       contentQuery.exec(function (err, content) {
         //Replace the content id with the actual content and render the json
         question.content = content;

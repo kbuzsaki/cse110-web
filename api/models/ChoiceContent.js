@@ -18,7 +18,8 @@ module.exports = {
       type: 'string',
     },
     question: {
-      model: 'question'
+      model: 'question',
+      required: true
     }
     /*responses: {
       collection: 'ChoiceResponse',
