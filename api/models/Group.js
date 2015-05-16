@@ -24,13 +24,8 @@ module.exports = {
     },
 
     toJSON: function(){
-    this.members = this.members.map(function(member) {
-        return member.id;
-      })
-      this.polls = this.polls.map(function(poll) {
-        return poll.id;
-      })
-  		return this;
+
+  		return gg.flatten(this);
   	}
   }
 

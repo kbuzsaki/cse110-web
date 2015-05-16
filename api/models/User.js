@@ -29,7 +29,7 @@ module.exports = {
 /*      this.groups = this.groups.map(function(group) {
           return group.id;
       })*/
-      return flatten(this);
+      return gg.flatten(this);
     }
   }
 };
