@@ -18,6 +18,10 @@ module.exports = {
       collection: 'RankResponse',
       via: 'question'
     }*/
+  },
+  beforeValidate: function(values, done){
+    values.options = _.unique(values.options).join("\n");
+    done();
   }
 };
 
