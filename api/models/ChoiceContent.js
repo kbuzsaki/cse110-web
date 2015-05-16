@@ -26,7 +26,8 @@ module.exports = {
       via: 'content'
     },
     toJSON: function() {
-      var data = gg.flatten(this);
+      //var data = gg.flatten(this);
+      data = this;
       data.options = this.options.split("\n");
       return data;
     }

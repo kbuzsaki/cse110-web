@@ -4,6 +4,8 @@ exports.flatten = function(obj) {
       obj[key] = property.map(function(item) {
           return item.id;
       })
+    }else{
+      if (property.id) obj[key] = property.id;
     }
   });
   return obj;

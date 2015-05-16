@@ -45,8 +45,9 @@ module.exports = {
   addResponse : function (req, res){
     var id = req.param('id');
     var data = req.param('response', {});
-    var user = data.responder.id;  //User will the owner of a response
+    var user = data.responder;  //User will the owner of a response
     var createNewResponse = true;
+    var response = {};
 
     //TODO bustout?
     var question = {};
@@ -66,23 +67,33 @@ module.exports = {
 
     var hasResponded = function(done){
       var ContentModel = req._sails.models[question.type + "response"];
-
-      ContentModel.findOne({responder:user}, function(err, responder){
-        if(responder) createNewResponse = false;
-        done();
+      var query = ContentModel.findOne().where({responder:user, content: question.content});
+      query.exec( function(err, resp){
+        if(err) return res.serverError(err);
+        if(!resp) {
+          console.log("User HAs not  ALREADY RESPONDED!!!");
+          done();
+        }
+        else {
+          createNewResponse = false;
+          resp.choices = data.choices.join("\n");
+          response = resp;
+          console.log("Updating response...");
+          resp.save(done);
+        }
       });
-    }
+    };
 
-    var response = {};
     var createResponse = function(done) {
       var ContentModel = req._sails.models[question.type + "response"];
-      data.content = question.content;
-      if (data.choices){
-        data.choices = data.choices.join("\n");
-      }
       //If the responder has not responded, create
       if(createNewResponse)
       {
+        data.content = question.content;
+        if (data.choices){
+          data.choices = data.choices.join("\n");
+        }
+        console.log("Creating response...");
         ContentModel.create(data, function(err, resp){
             if (err){
               res.negotiate(err);
@@ -94,14 +105,16 @@ module.exports = {
      }
      else //Update the current response of responder
      {
-      ContentModel.update(data, function(err, resp){
+       done();
+      /*ContentModel.update({},data).exec( function(err, resp){
+            console.log('testingu');
             if (err){
               res.negotiate(err);
               return done(true);
             }
             response = resp;
             done();
-        });
+        });*/
      }
 
     };
