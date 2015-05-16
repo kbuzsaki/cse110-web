@@ -16,6 +16,7 @@ module.exports = {
     var getQuestion = function(done) {
       Question.findOne(id, function(err, q){
         //If any errorys return a messages, might need in next query too?
+        //TODO fix done
         if (err) return res.serverError(err);
         if(!question) return res.notFound('Question with `id` not found.');
         question = q;
@@ -27,7 +28,7 @@ module.exports = {
       //Get the model class needed to query the content using the question type
       var ContentModel = req._sails.models[question.type + "content"];
       //Generate and execute the query to get the content
-      var contentQuery = ContentModel.findOne().where({question: id});
+      var contentQuery = ContentModel.findOne().where({question: id}).populate('responses');
       contentQuery.exec(function (err, content) {
         //Replace the content id with the actual content and render the json
         question.content = content;
@@ -40,6 +41,52 @@ module.exports = {
         getQuestion,
         getContent
     ]);
-  } /* end findOne */
+  }, /* end findOne */
+  addResponse : function (req, res){
+    var id = req.param('id');
+    var data = req.param('response', {});
+
+    //TODO bustout?
+    var question = {};
+    var getQuestion = function(done) {
+      Question.findOne(id, function(err, q){
+        //If any errorys return a messages, might need in next query too?
+        //TODO fix done
+        if (err) return res.serverError(err);
+        if(!question) return res.notFound('Question with `id` not found.');
+        question = q;
+        done();
+      })
+    };
+
+    var response = {};
+    var createResponse = function(done) {
+      var ContentModel = req._sails.models[question.type + "response"];
+      data.content = question.content;
+      if (data.choices){
+        data.choices = data.choices.join("\n");
+      }
+      ContentModel.create(data, function(err, resp){
+          if (err){
+            res.negotiate(err);
+            return done(true);
+          }
+          response = resp;
+          done();
+      });
+    };
+
+    var respond = function(done) {
+      res.status(201);
+      res.json(response);
+      done();
+    }
+
+    async.series([
+      getQuestion,
+      createResponse,
+      respond
+    ]);
+  }
 }; /* end exports */
 

@@ -8,14 +8,25 @@
 module.exports = {
   schema: true,
   attributes: {
-    user_id: {
-      model :'user'
+    responder: {
+      model :'user',
+      required: true
     },
-    choiceContent: {
-      model:'ChoiceContent'
+    content: {
+      model:'ChoiceContent',
+      required: true
     },
     choices: {
-      type: 'string'
+      type: 'string',
+      required: true
+    },
+    question: {
+      model: 'question',
+      required: true
+    },
+    toJSON: function() {
+      this.choices = this.choices.split("\n");
+      return this;
     }
   }
 };

@@ -52,6 +52,10 @@ module.exports.routes = {
   'GET /simple/poll/:id' : {
     controller: "Simple",
     action: "poll"
+  },
+  'POST /api/question/:id/response/create' : {
+    controller: "Question",
+    action: "addResponse"
   }
 
 };
