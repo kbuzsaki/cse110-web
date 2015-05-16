@@ -11,7 +11,7 @@ module.exports = {
     user_id: {
       model :'user'
     },
-    choiceContent: {
+    content: {
       model:'ChoiceContent'
     },
     choices: {

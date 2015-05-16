@@ -21,10 +21,10 @@ module.exports = {
       model: 'question',
       required: true
     },
-    /*responses: {
+    responses: {
       collection: 'ChoiceResponse',
-      via: 'question'
-    },*/
+      via: 'content'
+    },
     toJSON: function() {
       this.options = this.options.split("\n");
       return this;
