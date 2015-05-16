@@ -45,10 +45,13 @@ module.exports = {
   addResponse : function (req, res){
     var id = req.param('id');
     var data = req.param('response', {});
+    var user = data.responder.id;  //User will the owner of a response
+    var createNewResponse = true;
 
     //TODO bustout?
     var question = {};
     var getQuestion = function(done) {
+
       Question.findOne(id, function(err, q){
         //If any errorys return a messages, might need in next query too?
         //TODO fix done
@@ -59,6 +62,17 @@ module.exports = {
       })
     };
 
+    //We need to searcn the respone based on id of responder
+
+    var hasResponded = function(done){
+      var ContentModel = req._sails.models[question.type + "response"];
+
+      ContentModel.findOne({responder:user}, function(err, responder){
+        if(responder) createNewResponse = false;
+        done();
+      });
+    }
+
     var response = {};
     var createResponse = function(done) {
       var ContentModel = req._sails.models[question.type + "response"];
@@ -66,14 +80,30 @@ module.exports = {
       if (data.choices){
         data.choices = data.choices.join("\n");
       }
-      ContentModel.create(data, function(err, resp){
-          if (err){
-            res.negotiate(err);
-            return done(true);
-          }
-          response = resp;
-          done();
-      });
+      //If the responder has not responded, create
+      if(createNewResponse)
+      {
+        ContentModel.create(data, function(err, resp){
+            if (err){
+              res.negotiate(err);
+              return done(true);
+            }
+            response = resp;
+            done();
+        });
+     }
+     else //Update the current response of responder
+     {
+      ContentModel.update(data, function(err, resp){
+            if (err){
+              res.negotiate(err);
+              return done(true);
+            }
+            response = resp;
+            done();
+        });
+     }
+
     };
 
     var respond = function(done) {
@@ -84,6 +114,7 @@ module.exports = {
 
     async.series([
       getQuestion,
+      hasResponded,
       createResponse,
       respond
     ]);
