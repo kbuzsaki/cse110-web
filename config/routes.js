@@ -56,6 +56,10 @@ module.exports.routes = {
   'PUT /api/question/:id/response/create' : {
     controller: "Question",
     action: "addResponse"
+  },
+  'GET /api/question/:qid/response/:rid' : {
+    controller: "Question",
+    action: "getResponse"
   }
 
 };

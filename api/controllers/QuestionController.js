@@ -131,6 +131,48 @@ module.exports = {
       createResponse,
       respond
     ]);
-  }
+  }, /* end addResponse */
+  getResponse : function (req, res){
+    var rid = req.param('rid');
+    var qid = req.param('qid');
+
+    var question = {};
+    var getQuestion = function(done) {
+
+      Question.findOne(qid, function(err, q){
+        //If any errorys return a messages, might need in next query too?
+        //TODO fix done
+        if (err) return res.serverError(err);
+        if(!question) return res.notFound('Question with `id` not found.');
+        question = q;
+        done();
+      })
+    };
+
+    var response = {};
+    var getQuestionResponse = function(done) {
+      var ContentModel = req._sails.models[question.type + "response"];
+      ContentModel.findOne(rid, function(err, r){
+        //If any errorys return a messages, might need in next query too?
+        //TODO fix done
+        if (err) return res.serverError(err);
+        if(!question) return res.notFound('Response with `id` not found.');
+        response = r;
+        done();
+      })
+    };
+
+    var respond = function(done) {
+      res.status(201);
+      res.json(response);
+      done();
+    }
+
+    async.series([
+      getQuestion,
+      getQuestionResponse,
+      respond
+    ]);
+  } /* end getResponse */
 }; /* end exports */
 
