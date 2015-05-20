@@ -53,7 +53,7 @@ module.exports.routes = {
     controller: "Simple",
     action: "poll"
   },
-  'POST /api/question/:id/response/create' : {
+  'PUT /api/question/:id/response/create' : {
     controller: "Question",
     action: "addResponse"
   }
