@@ -163,7 +163,7 @@ module.exports = {
     };
 
     var respond = function(done) {
-      res.status(201);
+      res.status(200);
       res.json(response);
       done();
     }
