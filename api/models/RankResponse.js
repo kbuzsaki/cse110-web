@@ -10,14 +10,25 @@
 module.exports = {
   schema: true,
   attributes: {
-    user_id: {
-      model :'user'
+    responder: {
+      model :'user',
+      required: true
     },
-    rankContent: {
-      model:'RankContent'
+    content: {
+      model:'RankContent',
+      required: true
     },
     choices: {
-      type: 'string'
+      type: 'string',
+      required: true
+    },
+    question: {
+      model: 'question',
+      required: true
+    },
+    toJSON: function() {
+      this.choices = this.choices.split("\n");
+      return this;
     }
   }
 };

@@ -12,16 +12,19 @@ module.exports = {
       type: 'string',
     },
     question: {
-      model: 'question'
-    }
-    /*responses: {
+      model: 'question',
+      required: true
+    },
+    responses: {
       collection: 'RankResponse',
-      via: 'question'
-    }*/
-  },
-  beforeValidate: function(values, done){
-    values.options = _.unique(values.options).join("\n");
-    done();
+      via: 'content'
+    },
+    toJSON: function() {
+      //var data = gg.flatten(this);
+      data = this;
+      data.options = this.options.split("\n");
+      return data;
+    }
   }
 };
 
