@@ -17,11 +17,11 @@ module.exports = {
           create(done, results);
         } else done(err, code);
       });
-    }
+    };
     var respond = function(err, results){
       if (err) {return res.json(err);}
       return res.json(results.end);
-    }
+    };
 
     async.auto({
       end: create
@@ -29,11 +29,23 @@ module.exports = {
   },
   getPoll: function(req, res) {
     var code = req.param('code');
-    var query = AccessCode.findOne({code:code}).populate('poll');
-    query.exec(function(err, acode){
-      if (err) {return res.json(err);}
-      return res.json(acode.poll);
-    });
+    var query = AccessCode.findOne({code:code});
+
+    var getCode = function(done, results){
+      AccessCode.findOne({code:code}, done);
+    };
+    var getPoll = function(done, results){
+      PollHelper.findOneDeep(req.param('id'),
+      function finish(err, results){
+        if (err) {return res.serverError(err);}
+        return res.json(results.map);
+      });
+    };
+
+    async.series([
+      getCode,
+      getPoll
+    ]);
   }
 };
 
