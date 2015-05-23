@@ -31,9 +31,6 @@ module.exports = {
       via: 'poll'
     },
     toJSON: function(){
-      this.questions = this.questions.map(function(question) {
-        return question.id;
-      })
       return this;
     }
   }

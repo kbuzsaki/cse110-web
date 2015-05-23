@@ -16,9 +16,14 @@ module.exports = {
     var getQuestion = function(done) {
       Question.findOne(id, function(err, q){
         //If any errorys return a messages, might need in next query too?
-        //TODO fix done
-        if (err) return res.serverError(err);
-        if(!question) return res.notFound('Question with `id` not found.');
+        if (err || !q) {
+          if (err) res.serverError(err);
+          if (!q) {
+            res.status(410);
+            res.json("Question with that ID was not found");
+          }
+          return done(true);
+        }
         question = q;
         done();
       })
@@ -42,6 +47,8 @@ module.exports = {
         getContent
     ]);
   }, /* end findOne */
+
+  //TODO NEED TO ENSURE THE REQUESTS ARE PROCESSED IN ORDER
   addResponse : function (req, res){
     var id = req.param('id');
     var data = req.param('response', {});
@@ -55,9 +62,14 @@ module.exports = {
 
       Question.findOne(id, function(err, q){
         //If any errorys return a messages, might need in next query too?
-        //TODO fix done
-        if (err) return res.serverError(err);
-        if(!question) return res.notFound('Question with `id` not found.');
+        if (err || !q) {
+          if (err) res.serverError(err);
+          if (!q) {
+            res.status(410);
+            res.json("Question with that ID was not found");
+          }
+          return done(true);
+        }
         question = q;
         done();
       })
@@ -72,7 +84,7 @@ module.exports = {
         if(err) return res.serverError(err);
         if(!resp) {
           console.log("User HAs not  ALREADY RESPONDED!!!");
-          done();
+          return done();
         }
         else {
           createNewResponse = false;
@@ -141,9 +153,14 @@ module.exports = {
 
       Question.findOne(qid, function(err, q){
         //If any errorys return a messages, might need in next query too?
-        //TODO fix done
-        if (err) return res.serverError(err);
-        if(!question) return res.notFound('Question with `id` not found.');
+        if (err || !q) {
+          if (err) res.serverError(err);
+          if (!q) {
+            res.status(410);
+            res.json("Question with that ID was not found");
+          }
+          return done(true);
+        }
         question = q;
         done();
       })
@@ -154,9 +171,14 @@ module.exports = {
       var ContentModel = req._sails.models[question.type + "response"];
       ContentModel.findOne(rid, function(err, r){
         //If any errorys return a messages, might need in next query too?
-        //TODO fix done
-        if (err) return res.serverError(err);
-        if(!question) return res.notFound('Response with `id` not found.');
+        if (err || !r) {
+          if (err) res.serverError(err);
+          if (!r) {
+            res.status(410);
+            res.json("Response with that ID was not found");
+          }
+          return done(true);
+        }
         response = r;
         done();
       })

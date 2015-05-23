@@ -28,6 +28,7 @@ module.exports.models = {
   * drop, alter                                                              *
   ***************************************************************************/
   migrate: 'alter'
+  //migrate: 'drop'
   //,connection: 'pollrMySql'
 
 };
