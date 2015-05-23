@@ -60,6 +60,10 @@ module.exports.routes = {
   'GET /api/question/:qid/response/:rid' : {
     controller: "Question",
     action: "getResponse"
+  },
+  'GET /api/join/:code' : {
+    controller: "AccessCode",
+    action: "getPoll"
   }
 
 };

@@ -1,5 +1,5 @@
 /**
-* User.js
+* AccessCode.js
 *
 * @description :: TODO: You might write a short summary of how this model works and what it represents here.
 * @docs        :: http://sailsjs.org/#!documentation/models
@@ -7,25 +7,24 @@
 
 module.exports = {
 
-  schema: true,
   attributes: {
-    hash: {
-      type: 'string',
+    user: {
+      model: 'user',
       required: true
     },
-    name: {
-      type: 'string',
+    poll: {
+      model: 'poll',
       required: true
     },
-    avatar: {
-      type: 'string'
-    },
-    groups: {
-      collection: 'Group',
-      via:'members'
-    },
-    toJSON: function(){
-      return gg.flatten(this);
+    code: {
+      type: 'string',
+      required: true,
+      unique: true
     }
+  },
+  beforeValidate: function(values, done){
+    values.code = gg.generateCode();
+    done();
   }
 };
+

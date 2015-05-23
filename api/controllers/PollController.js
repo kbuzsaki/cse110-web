@@ -63,14 +63,6 @@ module.exports = {
     ]);
   },/* end create */
 
-  findOne: function(req, res){
-    var query = Poll.findOne(req.param('id'));
-    query.exec(function(err, poll){
-      if (err) return res.serverError(err);
-      if(!poll) return res.notFound('Poll with `id` not found.');
-      res.ok(poll);
-    });
-  },
   findOne: function(req, res) {
     async.auto({
       //Query the poll and return the results as results.poll
