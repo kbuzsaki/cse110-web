@@ -47,12 +47,11 @@ module.exports = {
     };
 
     var respond = function(done){
-      var query = Poll.findOne(poll.id).populate('questions');
-      query.exec(function(err, poll){
-        //console.log(poll);
-        res.status(201);
-        res.json(poll);
-        done();
+      PollHelper.findOneDeep(poll.id,
+      function finish(err, results){
+        if (err) res.serverError(err);
+        else res.json(results.map);
+        return done();
       });
     };
 
