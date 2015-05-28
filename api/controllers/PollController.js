@@ -51,7 +51,7 @@ module.exports = {
       function finish(err, results){
         if (err) res.serverError(err);
         else res.json(results.map);
-        return done();
+        done();
       });
     };
 

@@ -10,6 +10,7 @@ exports.findOneDeep = function(id, callback) {
     //Generate the queries to get all of the content for each of the polls
     //questions
     queries: ['poll', function(done, results) {
+      if (!results.poll) {return done("Poll not found!", null)};
       var poll = results.poll.toObject();
       //Group the poll's questions into groups by their question type
       var contents = _.groupBy(poll.questions, 'type');
