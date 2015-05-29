@@ -24,7 +24,7 @@ module.exports = {
     },
 
     toJSON: function(){
-
+      return gg.flatten(this);
   		return this;
   	}
   }

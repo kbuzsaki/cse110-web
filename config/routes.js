@@ -64,6 +64,10 @@ module.exports.routes = {
   'GET /api/join/:code' : {
     controller: "AccessCode",
     action: "getPoll"
+  },
+  'GET /api/user/groups/:user' : {
+    controller: "Group",
+    action: "groupsForUser"
   }
 
 };

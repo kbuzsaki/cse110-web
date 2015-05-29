@@ -25,6 +25,7 @@ module.exports = {
       via:'members'
     },
     toJSON: function(){
+      return this;
       return gg.flatten(this);
     }
   }
