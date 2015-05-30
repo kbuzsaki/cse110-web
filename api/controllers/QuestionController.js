@@ -50,8 +50,8 @@ module.exports = {
 
   //TODO NEED TO ENSURE THE REQUESTS ARE PROCESSED IN ORDER
   addResponse : function (req, res){
-    var id = req.param('id');
     var data = req.param('response', {});
+    var id = data.question;
     var user = data.responder;  //User will the owner of a response
     var createNewResponse = true;
     var response = {};

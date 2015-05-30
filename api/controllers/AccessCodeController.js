@@ -31,21 +31,21 @@ module.exports = {
     var code = req.param('code');
     var query = AccessCode.findOne({code:code});
 
-    var getCode = function(done, results){
+    var getCode = function(done){
       AccessCode.findOne({code:code}, done);
     };
-    var getPoll = function(done, results){
-      PollHelper.findOneDeep(req.param('id'),
+    var getPoll = function(err, results){
+      if (!results.code) {return res.serverError("Invalid code");}
+      PollHelper.findOneDeep(results.code.poll,
       function finish(err, results){
         if (err) {return res.serverError(err);}
         return res.json(results.map);
       });
     };
 
-    async.series([
-      getCode,
-      getPoll
-    ]);
+    async.auto({
+      code: getCode
+    }, getPoll);
   }
 };
 

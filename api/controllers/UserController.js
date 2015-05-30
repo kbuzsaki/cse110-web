@@ -40,7 +40,7 @@ module.exports = {
     };
 
     var respond = function(done) {
-      res.ok(user);
+      res.ok(gg.flatten(user));
       done();
     }
 
