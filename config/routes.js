@@ -61,7 +61,7 @@ module.exports.routes = {
     controller: "Question",
     action: "getResponse"
   },
-  'GET /api/join/:code' : {
+  'PUT /api/join' : {
     controller: "AccessCode",
     action: "getPoll"
   },

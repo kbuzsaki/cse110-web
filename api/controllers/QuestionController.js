@@ -75,8 +75,32 @@ module.exports = {
       })
     };
 
-    //We need to searcn the respone based on id of responder
+    //TODO bustout?
+    var content = {};
+    var getContent = function(done) {
+      var ContentModel = req._sails.models[question.type + "content"];
+      var query = ContentModel.findOne(question.content);
+      query.exec( function(err, cont){
+        if(err || !cont) return res.serverError(err);
+        content = cont;
+        var availableOptions = content.options.split("\n");
+        var pickedOptions = data.choices;
+        var difference = _.difference(pickedOptions, availableOptions);
+        if (difference.length != 0){
+          if (cont.allow_custom){
+            cont.options = availableOptions.concat(difference);
+            return cont.save(done);
+          }else{
+            data.choices = _.difference(pickedOptions, difference);
+            return done();
+          }
+        }else{
+          return done();
+        }
+      });
+    };
 
+    //We need to searcn the respone based on id of responder
     var hasResponded = function(done){
       var ContentModel = req._sails.models[question.type + "response"];
       var query = ContentModel.findOne().where({responder:user, content: question.content});
@@ -91,7 +115,7 @@ module.exports = {
           resp.choices = data.choices.join("\n");
           response = resp;
           console.log("Updating response...");
-          resp.save(done);
+          return resp.save(done);
         }
       });
     };
@@ -99,8 +123,7 @@ module.exports = {
     var createResponse = function(done) {
       var ContentModel = req._sails.models[question.type + "response"];
       //If the responder has not responded, create
-      if(createNewResponse)
-      {
+      if(createNewResponse) {
         data.content = question.content;
         if (data.choices){
           data.choices = data.choices.join("\n");
@@ -112,33 +135,22 @@ module.exports = {
               return done(true);
             }
             response = resp;
-            done();
+            return done();
         });
-     }
-     else //Update the current response of responder
-     {
-       done();
-      /*ContentModel.update({},data).exec( function(err, resp){
-            console.log('testingu');
-            if (err){
-              res.negotiate(err);
-              return done(true);
-            }
-            response = resp;
-            done();
-        });*/
-     }
-
+      }else{
+        return done();
+      }
     };
 
     var respond = function(done) {
       res.status(201);
       res.json(response);
-      done();
+      return done();
     }
 
     async.series([
       getQuestion,
+      getContent,
       hasResponded,
       createResponse,
       respond

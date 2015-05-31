@@ -48,8 +48,8 @@ exports.findOneDeep = function(id, callback) {
       });
       //use the question's type and content id to get the content and link it
       //up to it's question, creating the final poll object to be returned
-      poll.questions = poll.questions.map( function(question) {
-        question.content = contents[question.type][question.content];
+      poll.questions = _.map( poll.questions, function(question) {
+        question['content'] = contents[question.type][question.content];
         return question;
       });
       return done(null, poll);
