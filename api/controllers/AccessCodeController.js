@@ -42,7 +42,13 @@ module.exports = {
         group.members.add(user);
         group.save(function(err, group) {
           if(err){
-            return done(err);
+            var okay = false;
+            _.forEach(err, function(e){
+              var string = e.err.toString();
+              if (string.indexOf("already exists") > -1){return okay=true};
+            });
+            if(okay) return done();
+            else return done(err);
           }
           done();
         });
@@ -53,7 +59,10 @@ module.exports = {
       PollHelper.findOneDeep(results.code.poll, done);
     };
     var respond = function(err, results){
-      if (err) {return res.json(err);}
+      if (err) {
+        res.status(500);
+        return res.json(err);
+      }
       return res.json(results.poll.map);
     };
 
