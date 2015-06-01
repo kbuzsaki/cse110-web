@@ -88,7 +88,7 @@ module.exports = {
         var difference = _.difference(pickedOptions, availableOptions);
         if (difference.length != 0){
           if (cont.allow_custom){
-            cont.options = availableOptions.concat(difference);
+            cont.options = availableOptions.concat(difference).join("\n");
             return cont.save(done);
           }else{
             data.choices = _.difference(pickedOptions, difference);
