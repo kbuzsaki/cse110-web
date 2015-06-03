@@ -30,15 +30,20 @@ module.exports = {
     }
   },
   beforeValidate: function(values, done){
-    console.log('Creating question content...');
     var ContentModel = sails.models[values.type + "content"];
     //TODO might break later
     values.content.options = _.unique(values.content.options).join("\n");
     values.content.question = -1;
     ContentModel.create(values.content, function(err, content) {
       //TODO actually handle errors
-      if (err) console.log('uhh content got messed up...?');
+      if (err) {
+        console.log('uhh content got messed up...?');
+        return done("Content error");
+      }
       values.content = content.id;
+      console.log('Creating question content for:');
+      console.log(content.id);
+      console.log(values);
       done();
     });
   },
@@ -48,6 +53,8 @@ module.exports = {
     contentQuery.exec(function (err, content) {
       //Replace the content id with the actual content and render the json
       content.question = question.id;
+      console.log('finished creating: ');
+      console.log(question);
       content.save(done);
     })
   }
