@@ -31,6 +31,7 @@ module.exports = {
       via: 'poll'
     },
     toJSON: function(){
+      this.questions = _.sortBy(this.questions, 'index');
       return this;
     }
   }

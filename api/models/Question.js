@@ -25,6 +25,9 @@ module.exports = {
       type: 'integer',
       required: true
     },
+    index: {
+      type: 'integer'
+    },
     toJSON: function() {
       return this;
     }

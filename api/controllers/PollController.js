@@ -37,6 +37,10 @@ module.exports = {
     var poll = {};
     var createPoll = function(done){
       data.hash = crypto.randomBytes(20).toString('hex');
+      data.questions = _.forEach( data.questions, function(q, i){
+        q.index = i;
+        return q;
+      });
       Poll.create(data, function created (err, p) {
         if (err) return res.negotiate(err);
         console.log("Poll created: " + data.hash);
